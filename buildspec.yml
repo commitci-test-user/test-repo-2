@@ -1,0 +1,64 @@
+version: 0.2
+
+#env:
+#variables:
+# key: "value"
+# key: "value"
+#parameter-store:
+# key: "value"
+# key: "value"
+#secrets-manager:
+# key: secret-id:json-key:version-stage:version-id
+# key: secret-id:json-key:version-stage:version-id
+#exported-variables:
+# - variable
+# - variable
+#git-credential-helper: yes
+
+phases:
+  install:
+    #If you use the Ubuntu standard image 2.0 or later, you must specify runtime-versions.
+    #If you specify runtime-versions and use an image other than Ubuntu standard image 2.0, the build fails.
+    runtime-versions:
+      nodejs: 12.x
+      # name: version
+    commands:
+      #- nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
+    finally:
+      - echo finally block is completed
+  pre_build:
+    commands:
+      - node -v && docker --version
+      #- npm --version
+    finally:
+      - echo finally block is completed
+  build:
+    commands:
+      - node -v
+    finally:
+      - echo finally block is completed
+  post_build:
+    commands:
+      - node -v
+    finally:
+      - echo finally block is completed
+#artifacts:
+#files: imagedefinitions.json
+#reports:
+#report-name-or-arn:
+#files:
+# - location
+# - location
+#base-directory: location
+#discard-paths: yes
+#file-format: JunitXml | CucumberJson
+#artifacts:
+#files:
+# - location
+# - location
+#name: $(date +%Y-%m-%d)
+#discard-paths: yes
+#base-directory: location
+#cache:
+#paths:
+# - paths
