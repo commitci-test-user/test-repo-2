@@ -1,61 +1,64 @@
 version: 0.2
 
-env:
-  variables:
-    JAVA_HOME: "/usr/lib/jvm/java-8-openjdk-amd64"
-  parameter-store:
-    LOGIN_PASSWORD: /CodeBuild/dockerLoginPassword
+#env:
+#variables:
+# key: "value"
+# key: "value"
+#parameter-store:
+# key: "value"
+# key: "value"
+#secrets-manager:
+# key: secret-id:json-key:version-stage:version-id
+# key: secret-id:json-key:version-stage:version-id
+#exported-variables:
+# - variable
+# - variable
+#git-credential-helper: yes
 
 phases:
   install:
+    #If you use the Ubuntu standard image 2.0 or later, you must specify runtime-versions.
+    #If you specify runtime-versions and use an image other than Ubuntu standard image 2.0, the build fails.
+    runtime-versions:
+      nodejs: 12.x
+      # name: version
     commands:
-      - echo Entered the install phase...
-      - apt-get update -y
-      - apt-get install -y maven
+      #- nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
     finally:
-      - echo This always runs even if the update or install command fails 
+      - echo finally block is completed
   pre_build:
     commands:
-      - echo Entered the pre_build phase...
-      - docker login –u User –p $LOGIN_PASSWORD
+      - node -v && docker --version
+      #- npm --version
     finally:
-      - echo This always runs even if the login command fails 
+      - echo finally block is completed
   build:
     commands:
-      - echo Entered the build phase...
-      - echo Build started on `date`
-      - mvn install
+      - node -v
     finally:
-      - echo This always runs even if the install command fails
+      - echo finally block is completed
   post_build:
     commands:
-      - echo Entered the post_build phase...
-      - echo Build completed on `date`
-
-reports:
-  arn:aws:codebuild:your-region:your-aws-account-id:report-group/report-group-name-1:
-    files:
-      - "**/*"
-    base-directory: 'target/tests/reports'
-    discard-paths: no
-  reportGroupCucumberJson:
-    files:
-      - 'cucumber/target/cucumber-tests.xml'
-    discard-paths: yes
-    file-format: CucumberJson # default is JunitXml
-artifacts:
-  files:
-    - target/messageUtil-1.0.jar
-  discard-paths: yes
-  secondary-artifacts:
-    artifact1:
-      files:
-        - target/artifact-1.0.jar
-      discard-paths: yes
-    artifact2:
-      files:
-        - target/artifact-2.0.jar
-      discard-paths: yes
-cache:
-  paths:
-    - '/root/.m2/**/*'
+      - node -v
+    finally:
+      - echo finally block is completed
+#artifacts:
+#files: imagedefinitions.json
+#reports:
+#report-name-or-arn:
+#files:
+# - location
+# - location
+#base-directory: location
+#discard-paths: yes
+#file-format: JunitXml | CucumberJson
+#artifacts:
+#files:
+# - location
+# - location
+#name: $(date +%Y-%m-%d)
+#discard-paths: yes
+#base-directory: location
+#cache:
+#paths:
+# - paths
