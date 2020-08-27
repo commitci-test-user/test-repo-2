@@ -34,7 +34,7 @@ phases:
       - echo finally block is completed
   build:
     commands:
-      - node -vip
+      - node -v
     finally:
       - echo finally block is completed
   post_build:
