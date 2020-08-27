@@ -28,7 +28,7 @@ phases:
       - echo finally block is completed
   pre_build:
     commands:
-      - node -vvb && docker --version
+      - node -vvb && docker --versionf
       #- npm --version
     finally:
       - echo finally block is completed
